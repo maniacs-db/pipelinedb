@@ -1641,7 +1641,7 @@ static struct config_bool ConfigureNamesBool[] =
 		 NULL,
 		},
 		&continuous_queries_enabled,
-		false,
+		true,
 		NULL, NULL, NULL
 	},
 

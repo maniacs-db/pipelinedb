@@ -340,30 +340,15 @@ record_cv_dependencies(Oid cvoid, Oid matreloid, Oid seqreloid, Oid viewoid,
 		rv = (RangeVar *) lfirst(lc);
 		relid = RangeVarGetRelid(rv, NoLock, false);
 
-		if (IsInferredStream(relid))
-		{
-			referenced.classId = RelationRelationId;
-			referenced.objectId = viewoid;
-			referenced.objectSubId = 0;
+		referenced.classId = RelationRelationId;
+		referenced.objectId = relid;
+		referenced.objectSubId = 0;
 
-			dependent.classId = RelationRelationId;
-			dependent.objectId = relid;
-			dependent.objectSubId = 0;
+		dependent.classId = RelationRelationId;
+		dependent.objectId = viewoid;
+		dependent.objectSubId = 0;
 
-			recordDependencyOn(&dependent, &referenced, DEPENDENCY_STREAM);
-		}
-		else
-		{
-			referenced.classId = RelationRelationId;
-			referenced.objectId = relid;
-			referenced.objectSubId = 0;
-
-			dependent.classId = RelationRelationId;
-			dependent.objectId = viewoid;
-			dependent.objectSubId = 0;
-
-			recordDependencyOn(&dependent, &referenced, DEPENDENCY_NORMAL);
-		}
+		recordDependencyOn(&dependent, &referenced, DEPENDENCY_NORMAL);
 	}
 
 	referenced.classId = RelationRelationId;
@@ -499,7 +484,6 @@ ExecCreateContViewStmt(CreateContViewStmt *stmt, const char *querystring)
 
 	pipeline_query = heap_open(PipelineQueryRelationId, ExclusiveLock);
 
-	CreateInferredStreams((SelectStmt *) stmt->query);
 	MakeSelectsContinuous((SelectStmt *) stmt->query);
 
 	/* Apply any CQ storage options like max_age, step_factor */
@@ -964,30 +948,15 @@ record_ct_dependencies(Oid pqoid, Oid relid, Oid fnoid, SelectStmt *stmt, Query 
 		rv = (RangeVar *) lfirst(lc);
 		relid = RangeVarGetRelid(rv, NoLock, false);
 
-		if (IsInferredStream(relid))
-		{
-			referenced.classId = RelationRelationId;
-			referenced.objectId = relid;
-			referenced.objectSubId = 0;
+		referenced.classId = RelationRelationId;
+		referenced.objectId = relid;
+		referenced.objectSubId = 0;
 
-			dependent.classId = RelationRelationId;
-			dependent.objectId = relid;
-			dependent.objectSubId = 0;
+		dependent.classId = RelationRelationId;
+		dependent.objectId = relid;
+		dependent.objectSubId = 0;
 
-			recordDependencyOn(&dependent, &referenced, DEPENDENCY_STREAM);
-		}
-		else
-		{
-			referenced.classId = RelationRelationId;
-			referenced.objectId = relid;
-			referenced.objectSubId = 0;
-
-			dependent.classId = RelationRelationId;
-			dependent.objectId = relid;
-			dependent.objectSubId = 0;
-
-			recordDependencyOn(&dependent, &referenced, DEPENDENCY_NORMAL);
-		}
+		recordDependencyOn(&dependent, &referenced, DEPENDENCY_NORMAL);
 	}
 
 	referenced.classId = RelationRelationId;
@@ -1056,7 +1025,6 @@ ExecCreateContTransformStmt(CreateContTransformStmt *stmt, const char *querystri
 
 	pipeline_query = heap_open(PipelineQueryRelationId, ExclusiveLock);
 
-	CreateInferredStreams((SelectStmt *) stmt->query);
 	MakeSelectsContinuous((SelectStmt *) stmt->query);
 
 	ValidateContQuery(stmt->into->rel, stmt->query, querystring);

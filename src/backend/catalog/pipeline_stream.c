@@ -759,32 +759,6 @@ bool IsStream(Oid relid)
 }
 
 /*
- * CreateInferredStream
- */
-void
-CreateInferredStream(RangeVar *rv)
-{
-	ObjectAddress address;
-	CreateStreamStmt *stmt;
-
-	stmt = makeNode(CreateStreamStmt);
-	stmt->ft.base.relation = rv;
-	stmt->ft.base.tableElts = NIL;
-	stmt->ft.base.if_not_exists = false;
-	stmt->is_inferred = true;
-	stmt->ft.servername = PIPELINE_STREAM_SERVER;
-
-	transformCreateStreamStmt(stmt);
-
-	address = DefineRelation((CreateStmt *) stmt,
-							RELKIND_STREAM,
-							InvalidOid, NULL);
-
-	CreateForeignTable((CreateForeignTableStmt *) stmt, address.objectId);
-	CreatePipelineStreamEntry(stmt, address.objectId);
-}
-
-/*
  * CreatePipelineStreamCatalogEntry
  */
 void
