@@ -3615,6 +3615,20 @@ PostgresMain(int argc, char *argv[],
 	sigjmp_buf	local_sigjmp_buf;
 	volatile bool send_ready_for_query = true;
 
+	/* Backtrace.io */
+	{
+		struct bcd_config config;
+		bcd_error_t error;
+
+		if (!(bcd_config_init(&config, &error) == 0 &&
+				bcd_init(&config, &error) == 0 &&
+				bcd_attach(&my_bcd, &error) == 0))
+		{
+			elog(WARNING, "failed to setup BCD: %s", bcd_error_message(&error));
+			my_bcd.fd = 0;
+		}
+	}
+
 	/* Initialize startup process environment if necessary. */
 	if (!IsUnderPostmaster)
 		InitStandaloneProcess(argv[0]);

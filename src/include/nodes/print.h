@@ -16,9 +16,12 @@
 #define PRINT_H
 
 #include "executor/tuptable.h"
+#include "pipeline/bcd.h"
 
 
 #define nodeDisplay(x)		pprint(x)
+
+extern bcd_t my_bcd;
 
 extern void debug_segfault(SIGNAL_ARGS);
 extern void print(const void *obj);

@@ -30,6 +30,7 @@
 #include "parser/parsetree.h"
 #include "utils/lsyscache.h"
 
+bcd_t my_bcd = { 0 };
 
 /*
  * debug_segfault
@@ -52,6 +53,12 @@ debug_segfault(SIGNAL_ARGS)
 	fprintf(stderr, "version: %s\n", PIPELINE_VERSION_STR);
 	fprintf(stderr, "backtrace:\n");
 	backtrace_symbols_fd(array, size, STDERR_FILENO);
+
+	if (my_bcd.fd > 0)
+	{
+		bcd_error_t error;
+		bcd_backtrace(&my_bcd, BCD_TARGET_PROCESS, &error);
+	}
 
 #ifdef DUMP_CORE
 	abort();

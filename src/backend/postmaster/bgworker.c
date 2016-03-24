@@ -588,6 +588,20 @@ StartBackgroundWorker(void)
 	BackgroundWorker *worker = MyBgworkerEntry;
 	bgworker_main_type entrypt;
 
+	/* Backtrace.io */
+	{
+		struct bcd_config config;
+		bcd_error_t error;
+
+		if (!(bcd_config_init(&config, &error) == 0 &&
+				bcd_init(&config, &error) == 0 &&
+				bcd_attach(&my_bcd, &error) == 0))
+		{
+			elog(WARNING, "failed to setup BCD: %s", bcd_error_message(&error));
+			my_bcd.fd = 0;
+		}
+	}
+
 	if (worker == NULL)
 		elog(FATAL, "unable to find bgworker entry");
 

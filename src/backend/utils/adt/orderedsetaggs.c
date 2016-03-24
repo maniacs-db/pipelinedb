@@ -2240,7 +2240,7 @@ init_first_values_query_state(PG_FUNCTION_ARGS)
 	args = aggref->orig_args ? aggref->orig_args : aggref->args;
 
 	num_sort = list_length(order);
-	Assert(num_sort);
+//	Assert(num_sort);
 
 	econtext = CreateStandaloneExprContext();
 	expr = (ExprState *) linitial((List *) ExecInitExpr((Expr *) direct, NULL));
