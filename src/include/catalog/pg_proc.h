@@ -5923,6 +5923,15 @@ DESCR("continuous trigger debug utility");
 DATA(insert OID = 4486 ( pipeline_test_alert_new_row PGNSP PGUID 12 1 0 0 0 f f f f t f v 0 0 2279 "" _null_ _null_ _null_ _null_ _null_ pipeline_test_alert_new_row _null_ _null_ _null_ ));
 DESCR("test alert new row");
 
+DATA(insert OID = 4490 (jsonb_agg_combine PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 2281" _null_ _null_ _null_ _null_ _null_ jsonb_agg_combine _null_ _null_ _null_ ));
+DESCR("jsonb array aggregation combination function");
+DATA(insert OID = 4491 (jsonb_object_agg_combine PGNSP PGUID 12 1 0 0 0 f f f f f f i 2 0 2281 "2281 2281" _null_ _null_ _null_ _null_ _null_ jsonb_object_agg_combine _null_ _null_ _null_ ));
+DESCR("jsonb object aggregation combination function");
+DATA(insert OID = 4492 (jsonbaggstaterecv PGNSP PGUID 12 1 0 0 0 f f f f f f i 1 0 2281 "17" _null_ _null_ _null_ _null_ _null_ jsonbaggstaterecv _null_ _null_ _null_ ));
+DESCR("deserializer for jsonb aggregation transition states");
+DATA(insert OID = 4493 (jsonbaggstatesend PGNSP PGUID 12 1 0 0 0 f f f f f f i 1 0 17 "2281" _null_ _null_ _null_ _null_ _null_ jsonbaggstatesend _null_ _null_ _null_ ));
+DESCR("serializer for jsonb aggregation transition states");
+
 /*
  * Symbolic values for provolatile column: these indicate whether the result
  * of a function is dependent *only* on the values of its explicit arguments,
