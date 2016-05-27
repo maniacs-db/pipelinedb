@@ -1958,13 +1958,6 @@ jsonb_agg_combine(PG_FUNCTION_ARGS)
 
 	if (PG_ARGISNULL(0))
 	{
-		Oid	arg_type = get_fn_expr_argtype(fcinfo->flinfo, 1);
-
-		if (arg_type == InvalidOid)
-			ereport(ERROR,
-					(errcode(ERRCODE_INVALID_PARAMETER_VALUE),
-							errmsg("could not determine input data type")));
-
 		oldcontext = MemoryContextSwitchTo(aggcontext);
 
 		state = palloc(sizeof(JsonbAggState));
@@ -1974,9 +1967,6 @@ jsonb_agg_combine(PG_FUNCTION_ARGS)
 				WJB_BEGIN_ARRAY, NULL);
 
 		MemoryContextSwitchTo(oldcontext);
-
-		jsonb_categorize_type(arg_type, &state->val_category,
-				&state->val_output_func);
 	}
 	else
 	{
@@ -1986,14 +1976,11 @@ jsonb_agg_combine(PG_FUNCTION_ARGS)
 
 	if (!PG_ARGISNULL(0))
 	{
-		JsonbAggState *incoming = (JsonbAggState *) PG_GETARG_POINTER(1);
+		Jsonb *jbelem = (Jsonb *) PG_GETARG_POINTER(1);
 		JsonbIterator *it;
-		Jsonb	   *jbelem;
-		JsonbValue	v;
+		JsonbValue v;
 		JsonbIteratorToken type;
 		bool single_scalar = false;
-
-		jbelem = JsonbValueToJsonb(incoming->res->res);
 
 		/* switch to the aggregate context for accumulation operations */
 		oldcontext = MemoryContextSwitchTo(aggcontext);
@@ -2065,22 +2052,44 @@ jsonb_object_agg_combine(PG_FUNCTION_ARGS)
 Datum
 jsonbaggstatesend(PG_FUNCTION_ARGS)
 {
+	JsonbInState result;
 	JsonbAggState *state = PG_ARGISNULL(0) ? NULL : (JsonbAggState *) PG_GETARG_POINTER(0);;
-	Jsonb *json;
-	char *pos;
-	int nbytes;
-	bytea *result;
 
 	if (!state)
-			PG_RETURN_NULL();
+		PG_RETURN_NULL();
 
-	json = JsonbValueToJsonb(state->res->res);
+	result.parseState = clone_parse_state(state->res->parseState);
 
-	PG_RETURN_BYTEA_P(result);
+	if (result.parseState->contVal.type == jbvArray)
+		result.res = pushJsonbValue(&result.parseState,
+				WJB_END_ARRAY, NULL);
+	else
+	{
+		Assert(result.parseState->contVal.type == jbvObject);
+
+		result.res = pushJsonbValue(&result.parseState,
+				WJB_END_OBJECT, NULL);
+	}
+
+	PG_RETURN_BYTEA_P(JsonbValueToJsonb(result.res));
 }
 
 Datum
 jsonbaggstaterecv(PG_FUNCTION_ARGS)
 {
-	PG_RETURN_NULL();
+	MemoryContext context;
+	MemoryContext old;
+	Jsonb *json;
+
+	if (PG_ARGISNULL(0))
+		PG_RETURN_NULL();
+
+	if (!AggCheckCallContext(fcinfo, &context))
+		context = fcinfo->flinfo->fn_mcxt;
+
+	old = MemoryContextSwitchTo(context);
+	json = (Jsonb *) PG_GETARG_BYTEA_P_COPY(0);
+	MemoryContextSwitchTo(old);
+
+	PG_RETURN_POINTER(json);
 }
