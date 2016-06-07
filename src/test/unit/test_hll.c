@@ -1,7 +1,7 @@
 #include <check.h>
 
 #include "suites.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/hll.h"
 
 #define MURMUR_SEED 0xb3216312b7b5a93cL

@@ -12,7 +12,7 @@
 #include "access/tupmacs.h"
 #include "catalog/pg_type.h"
 #include "lib/stringinfo.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/array.h"
 #include "utils/datum.h"
 #include "utils/hsearch.h"

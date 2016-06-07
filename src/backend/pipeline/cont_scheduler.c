@@ -28,7 +28,7 @@
 #include "pipeline/cont_execute.h"
 #include "pipeline/cont_scheduler.h"
 #include "pipeline/ipc/broker.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "postmaster/fork_process.h"
 #include "postmaster/postmaster.h"
 #include "storage/ipc.h"

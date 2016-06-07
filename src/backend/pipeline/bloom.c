@@ -13,7 +13,7 @@
 
 #include <math.h>
 #include "pipeline/bloom.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/elog.h"
 #include "utils/palloc.h"
 

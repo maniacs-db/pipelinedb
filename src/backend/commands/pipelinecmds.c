@@ -48,7 +48,7 @@
 #include "pipeline/cqmatrel.h"
 #include "pipeline/cont_analyze.h"
 #include "pipeline/cont_plan.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/stream.h"
 #include "regex/regex.h"
 #include "tcop/dest.h"

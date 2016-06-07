@@ -12,7 +12,7 @@
 #include "postgres.h"
 #include "catalog/pg_type.h"
 #include "pipeline/fss.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/elog.h"
 #include "utils/palloc.h"
 

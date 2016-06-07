@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2015, PipelineDB
  *
- * src/backend/pipeline/miscutils.c
+ * src/backend/pipeline/pipelineutils.c
  */
 
 #include <sys/time.h>
@@ -11,12 +11,12 @@
 #include <math.h>
 #include <unistd.h>
 
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "port.h"
 #include "utils/datum.h"
 #include "utils/typcache.h"
 
-extern double continuous_query_proc_priority;
+flog_t my_flog;
 
 void
 append_suffix(char *str, char *suffix, int max_len)
@@ -289,4 +289,29 @@ int
 SetDefaultPriority()
 {
 	return nice(default_priority);
+}
+
+void
+flog_init(void)
+{
+	MemSet(&my_flog, 0, sizeof(flog_t));
+}
+
+void
+flog(const char *str)
+{
+
+}
+
+void
+flog_dump(void)
+{
+	int start = my_flog.start;
+
+	while (start < my_flog.end)
+	{
+		char *pos = &my_flog.bytes[start % FLOG_SIZE];
+		fprintf(stderr, pos);
+		pos += strlen(pos);
+	}
 }

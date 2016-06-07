@@ -30,7 +30,7 @@
 #include "nodes/nodeFuncs.h"
 #include "optimizer/tlist.h"
 #include "pipeline/hll.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/tdigest.h"
 #include "utils/array.h"
 #include "utils/builtins.h"

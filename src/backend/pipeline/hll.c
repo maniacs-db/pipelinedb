@@ -51,7 +51,7 @@
 #include <math.h>
 
 #include "pipeline/hll.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/elog.h"
 #include "utils/palloc.h"
 

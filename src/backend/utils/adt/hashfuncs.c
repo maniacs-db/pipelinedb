@@ -15,7 +15,7 @@
 #include "nodes/nodeFuncs.h"
 #include "nodes/primnodes.h"
 #include "parser/parse_coerce.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/datum.h"
 #include "utils/hashfuncs.h"
 #include "utils/memutils.h"

@@ -16,7 +16,7 @@
 #include "libpq/pqformat.h"
 #include "nodes/nodeFuncs.h"
 #include "pipeline/hll.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/array.h"
 #include "utils/builtins.h"
 #include "utils/datum.h"

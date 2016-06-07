@@ -12,7 +12,7 @@
 #include <limits.h>
 #include <math.h>
 #include "pipeline/cmsketch.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/elog.h"
 #include "utils/palloc.h"
 

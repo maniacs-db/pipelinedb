@@ -42,7 +42,7 @@
 #include "pipeline/cont_plan.h"
 #include "pipeline/cont_scheduler.h"
 #include "pipeline/ipc/broker.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/stream_fdw.h"
 #include "storage/ipc.h"
 #include "storage/proc.h"

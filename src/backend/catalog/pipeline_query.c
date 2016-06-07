@@ -29,7 +29,7 @@
 #include "parser/analyze.h"
 #include "pipeline/cont_analyze.h"
 #include "pipeline/cont_scheduler.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "postmaster/bgworker.h"
 #include "storage/pmsignal.h"
 #include "storage/proc.h"

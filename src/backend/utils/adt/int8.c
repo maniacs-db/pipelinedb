@@ -21,7 +21,7 @@
 #include "funcapi.h"
 #include "libpq/pqformat.h"
 #include "pipeline/hll.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/datum.h"
 #include "utils/int8.h"
 #include "utils/builtins.h"

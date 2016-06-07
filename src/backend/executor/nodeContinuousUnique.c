@@ -21,7 +21,7 @@
 #include "executor/nodeContinuousUnique.h"
 #include "miscadmin.h"
 #include "pipeline/cont_scheduler.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/builtins.h"
 #include "utils/datum.h"
 #include "utils/memutils.h"

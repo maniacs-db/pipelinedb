@@ -20,7 +20,7 @@
 #include "parser/parse_type.h"
 #include "pipeline/combinerReceiver.h"
 #include "pipeline/cont_execute.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/stream.h"
 #include "miscadmin.h"
 #include "storage/shm_alloc.h"

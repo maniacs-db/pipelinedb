@@ -1,12 +1,12 @@
 /*
  * Miscellaneous utilities
  *
- * Copyright (c) 2013-2015, PipelineDB
+ * Copyright (c) 2013-2016, PipelineDB
  *
- * src/include/pipeline/miscutils.h
+ * src/include/pipeline/pipelineutils.h
  */
-#ifndef MISCUTILS_H
-#define MISCUTILS_H
+#ifndef PIPELINEUTILS_H
+#define PIPELINEUTILS_H
 
 #include "postgres.h"
 
@@ -18,9 +18,12 @@
 #include "storage/dsm.h"
 #include "utils/typcache.h"
 
+extern double continuous_query_proc_priority;
+
 #define ptr_difference(begin, end) ((void *) (((char *) end) - ((char *) begin)))
 #define ptr_offset(begin, offset) ((void *) (((char *) begin) + ((uintptr_t) offset)))
 
+/* strings related */
 extern void append_suffix(char *str, char *suffix, int max_len);
 extern int skip_token(const char *str, char* substr, int start);
 extern char *random_hex(int len);
@@ -35,4 +38,20 @@ extern void DatumToBytes(Datum d, TypeCacheEntry *typ, StringInfo buf);
 extern int SetNicePriority(void);
 extern int SetDefaultPriority(void);
 
-#endif   /* MISCUTILS_H */
+/* fast in-memory logging */
+#define FLOG_SIZE 8192 /* 8k */
+
+typedef struct flog_t
+{
+	int  start;
+	int  end;
+	char bytes[FLOG_SIZE];
+} flog_t;
+
+extern flog_t my_flog;
+
+extern void flog_init(void);
+extern void flog(const char *str);
+extern void flog_dump(void);
+
+#endif   /* PIPELINEUTILS_H */

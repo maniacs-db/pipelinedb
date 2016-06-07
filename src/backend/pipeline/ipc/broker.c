@@ -22,7 +22,7 @@
 #include "pipeline/cont_scheduler.h"
 #include "pipeline/ipc/broker.h"
 #include "pipeline/ipc/queue.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/stream.h"
 #include "port/atomics.h"
 #include "postmaster/fork_process.h"

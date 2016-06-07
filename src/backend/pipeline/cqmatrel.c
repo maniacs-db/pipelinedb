@@ -18,7 +18,7 @@
 #include "executor/executor.h"
 #include "nodes/execnodes.h"
 #include "pipeline/cqmatrel.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/rel.h"
 #include "utils/lsyscache.h"
 #include "utils/memutils.h"

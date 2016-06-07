@@ -30,7 +30,7 @@
 #include "pipeline/cont_adhoc.h"
 #include "pipeline/cont_execute.h"
 #include "pipeline/cont_scheduler.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "pipeline/stream.h"
 #include "pipeline/stream_fdw.h"
 #include "utils/builtins.h"

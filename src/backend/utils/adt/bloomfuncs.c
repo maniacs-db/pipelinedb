@@ -18,7 +18,7 @@
 #include "libpq/pqformat.h"
 #include "nodes/nodeFuncs.h"
 #include "pipeline/bloom.h"
-#include "pipeline/miscutils.h"
+#include "pipeline/pipelineutils.h"
 #include "utils/builtins.h"
 #include "utils/datum.h"
 #include "utils/bloomfuncs.h"
