@@ -16,7 +16,7 @@
 #include "utils/datum.h"
 #include "utils/typcache.h"
 
-flog_t my_flog;
+dlog_t my_dlog;
 
 void
 append_suffix(char *str, char *suffix, int max_len)
@@ -291,27 +291,48 @@ SetDefaultPriority()
 	return nice(default_priority);
 }
 
-void
-flog_init(void)
+typedef struct dlog_entry_t
 {
-	MemSet(&my_flog, 0, sizeof(flog_t));
+	uint64 next;
+	char   str[1];
+} dlog_entry_t;
+
+#define DLOG_ENTRY_MAX_LEN (DLOG_SIZE - sizeof(dlog_entry_t))
+
+void
+dlog_init(void)
+{
+	MemSet(&my_dlog, 0, sizeof(dlog_t));
 }
 
 void
-flog(const char *str)
+dlog(const char *fmt, ...)
 {
+	va_list args;
+	int len;
 
-}
+	va_start(args, fmt);
 
-void
-flog_dump(void)
-{
-	int start = my_flog.start;
-
-	while (start < my_flog.end)
+	len = vsnprintf(my_dlog.scratch, DLOG_ENTRY_MAX_LEN, fmt, args);
+	if (len > 0 && len < DLOG_ENTRY_MAX_LEN)
 	{
-		char *pos = &my_flog.bytes[start % FLOG_SIZE];
-		fprintf(stderr, pos);
-		pos += strlen(pos);
+
+		len = len + sizeof(dlog_entry_t);
+
+	}
+
+	va_end(args);
+}
+
+void
+dlog_dump(void)
+{
+	uint64 start = my_dlog.tail;
+
+	while (start < my_dlog.head)
+	{
+		dlog_entry_t *entry = (dlog_entry_t *) &my_dlog.buf[start % DLOG_SIZE];
+		fputs(entry->str, stderr);
+		start = entry->next;
 	}
 }

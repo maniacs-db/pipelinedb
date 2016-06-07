@@ -39,19 +39,20 @@ extern int SetNicePriority(void);
 extern int SetDefaultPriority(void);
 
 /* fast in-memory logging */
-#define FLOG_SIZE 8192 /* 8k */
+#define DLOG_SIZE 8192 /* 8k */
 
-typedef struct flog_t
+typedef struct dlog_t
 {
-	int  start;
-	int  end;
-	char bytes[FLOG_SIZE];
-} flog_t;
+	uint64 head;
+	uint64 tail;
+	char buf[DLOG_SIZE];
+	char scratch[DLOG_SIZE];
+} dlog_t;
 
-extern flog_t my_flog;
+extern dlog_t my_dlog;
 
-extern void flog_init(void);
-extern void flog(const char *str);
-extern void flog_dump(void);
+extern void dlog_init(void);
+extern void dlog(const char *format, ...) pg_attribute_printf(1, 0);
+extern void dlog_dump(void);
 
 #endif   /* PIPELINEUTILS_H */
